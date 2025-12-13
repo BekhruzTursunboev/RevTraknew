@@ -32,7 +32,6 @@ export default function ClientModal({ isOpen, onClose, client, onSave }: ClientM
         description: client.description,
       });
     } else {
-      const today = new Date();
       const nextWeek = new Date();
       nextWeek.setDate(nextWeek.getDate() + 7);
       setFormData({

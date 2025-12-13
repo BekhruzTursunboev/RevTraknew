@@ -20,7 +20,7 @@ export default function TaskModal({ isOpen, onClose, task, clients, onSave }: Ta
     dueDate: '',
     priority: 'medium' as TaskPriority,
     status: 'todo' as TaskStatus,
-    projectId: '',
+    clientId: '',
     milestone: '',
   });
 
