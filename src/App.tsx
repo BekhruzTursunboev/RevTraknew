@@ -39,7 +39,7 @@ function App() {
         <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} overdueCount={overdueTasks.length} />
         <div className="flex">
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          <main className="flex-1 p-4 md:p-8 lg:p-12">
+          <main className="flex-1 p-3 md:p-8 lg:p-12">
             <AnimatePresence mode="wait">
               <Routes>
                 <Route path="/" element={<Dashboard data={data} updateData={updateData} />} />
@@ -67,21 +67,21 @@ function Navbar({ sidebarOpen, setSidebarOpen, overdueCount }: { sidebarOpen: bo
 
   return (
     <nav className="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
-      <div className="px-4 md:px-8 py-4">
+      <div className="px-3 md:px-8 py-3 md:py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="md:hidden text-gray-300 hover:text-white transition-colors"
+              className="md:hidden text-gray-300 hover:text-white transition-colors p-1"
             >
-              {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
+              {sidebarOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
-            <div className="flex items-center gap-3">
-              <img src="/logo.png" alt="RevTrak" className="h-8 w-8" />
-              <h1 className="text-2xl font-bold text-glow">RevTrak</h1>
+            <div className="flex items-center gap-2 md:gap-3">
+              <img src="/logo.png" alt="RevTrak" className="h-7 w-7 md:h-8 md:w-8" />
+              <h1 className="text-xl md:text-2xl font-bold text-glow">RevTrak</h1>
             </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             {/* Desktop Navigation Links */}
             <div className="hidden md:flex items-center gap-2">
               {navItems.map((item) => {
@@ -110,10 +110,10 @@ function Navbar({ sidebarOpen, setSidebarOpen, overdueCount }: { sidebarOpen: bo
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="flex items-center gap-2 bg-red-500/20 text-red-400 px-4 py-2 rounded-lg border border-red-500/30"
+                className="flex items-center gap-1 md:gap-2 bg-red-500/20 text-red-400 px-2 md:px-4 py-1.5 md:py-2 rounded-lg border border-red-500/30"
               >
-                <AlertCircle size={18} />
-                <span className="text-sm font-medium">{overdueCount} Overdue</span>
+                <AlertCircle size={16} className="md:w-[18px] md:h-[18px]" />
+                <span className="text-xs md:text-sm font-medium">{overdueCount} Overdue</span>
               </motion.div>
             )}
           </div>
@@ -153,7 +153,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean; setSid
           md:!translate-x-0
         `}
       >
-        <div className="p-6">
+        <div className="p-4 md:p-6">
           <nav className="space-y-2">
             {navItems.map((item) => {
               const Icon = item.icon;

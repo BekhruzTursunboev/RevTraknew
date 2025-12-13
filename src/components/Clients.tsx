@@ -110,29 +110,29 @@ export default function Clients({ data, updateData }: ClientsProps) {
         className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
       >
         <div>
-          <h2 className="text-3xl font-bold text-white mb-2">Clients</h2>
-          <p className="text-gray-400">Manage your clients and track payments</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Clients</h2>
+          <p className="text-sm md:text-base text-gray-400">Manage your clients and track payments</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <button
             onClick={() => handleExport('csv')}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors border border-gray-700"
+            className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors border border-gray-700 text-sm md:text-base"
           >
-            <Download size={18} />
+            <Download size={16} className="md:w-[18px] md:h-[18px]" />
             <span className="hidden md:inline">Export CSV</span>
           </button>
           <button
             onClick={() => handleExport('pdf')}
-            className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors bg-glow"
+            className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors bg-glow text-sm md:text-base"
           >
-            <Download size={18} />
+            <Download size={16} className="md:w-[18px] md:h-[18px]" />
             <span className="hidden md:inline">Export PDF</span>
           </button>
           <button
             onClick={handleAdd}
-            className="flex items-center gap-2 px-4 py-2 bg-accent-600 hover:bg-accent-700 text-white rounded-lg transition-colors bg-glow-green"
+            className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 bg-accent-600 hover:bg-accent-700 text-white rounded-lg transition-colors bg-glow-green text-sm md:text-base"
           >
-            <Plus size={18} />
+            <Plus size={16} className="md:w-[18px] md:h-[18px]" />
             <span className="hidden md:inline">Add Client</span>
             <span className="md:hidden">Add</span>
           </button>
@@ -177,21 +177,21 @@ export default function Clients({ data, updateData }: ClientsProps) {
       )}
 
       <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
-        <div className="flex flex-col md:flex-row gap-4 mb-4">
+        <div className="flex flex-col md:flex-row gap-3 md:gap-4 mb-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
             <input
               type="text"
-              placeholder="Search clients by name, phone, or description..."
+              placeholder="Search clients..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary-500"
+              className="w-full pl-9 md:pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary-500 text-sm md:text-base"
             />
           </div>
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-primary-500"
+            className="px-3 md:px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-primary-500 text-sm md:text-base"
           >
             <option value="all">All Status</option>
             <option value="paid">Paid</option>
@@ -200,7 +200,105 @@ export default function Clients({ data, updateData }: ClientsProps) {
           </select>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Mobile Card View */}
+        <div className="md:hidden space-y-3">
+          <AnimatePresence>
+            {filteredClients.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                No clients found
+              </div>
+            ) : (
+              filteredClients.map((client, idx) => (
+                <motion.div
+                  key={client.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: idx * 0.05 }}
+                  className={`
+                    bg-gray-800 border rounded-lg p-4
+                    ${isOverdue(client) ? 'border-red-500/50 bg-red-500/5' : ''}
+                    ${isDueSoon(client) && !isOverdue(client) ? 'border-yellow-500/50 bg-yellow-500/5' : 'border-gray-700'}
+                  `}
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
+                        <h3 className="font-semibold text-white text-lg">{client.name}</h3>
+                        {isOverdue(client) && (
+                          <span className="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs font-medium border border-red-500/30">
+                            Overdue
+                          </span>
+                        )}
+                        {isDueSoon(client) && !isOverdue(client) && (
+                          <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded text-xs font-medium border border-yellow-500/30">
+                            Due Soon
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-2 text-gray-300 mb-2">
+                        <Phone size={16} />
+                        <span className="text-sm">{client.phoneNumber}</span>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleEdit(client)}
+                        className="p-2 text-primary-400 hover:text-primary-300 hover:bg-primary-500/10 rounded transition-colors"
+                      >
+                        <Edit size={18} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(client.id)}
+                        className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded transition-colors"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-400 text-sm">Amount:</span>
+                      <span className="font-semibold text-accent-400 text-lg">
+                        ${client.amount.toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-400 text-sm">Status:</span>
+                      <button
+                        onClick={() => handleTogglePayment(client)}
+                        className={`
+                          px-3 py-1 rounded text-xs border flex items-center gap-1 cursor-pointer transition-all
+                          ${getStatusColor(client.paymentStatus)}
+                          hover:opacity-80
+                        `}
+                      >
+                        {getStatusIcon(client.paymentStatus)}
+                        {client.paymentStatus}
+                      </button>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-400 text-sm">Due Date:</span>
+                      <div className="flex items-center gap-2 text-gray-300">
+                        <Calendar size={14} />
+                        <span className="text-sm">{new Date(client.dueDate).toLocaleDateString()}</span>
+                      </div>
+                    </div>
+                    {client.description && (
+                      <div className="pt-2 border-t border-gray-700">
+                        <p className="text-gray-400 text-sm">{client.description}</p>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              ))
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-800">

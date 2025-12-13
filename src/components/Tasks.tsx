@@ -101,29 +101,29 @@ export default function Tasks({ data, updateData }: TasksProps) {
         className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
       >
         <div>
-          <h2 className="text-3xl font-bold text-white mb-2">Tasks</h2>
-          <p className="text-gray-400">Track and manage your tasks and deadlines</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Tasks</h2>
+          <p className="text-sm md:text-base text-gray-400">Track and manage your tasks and deadlines</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <button
             onClick={() => handleExport('csv')}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors border border-gray-700"
+            className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors border border-gray-700 text-sm md:text-base"
           >
-            <Download size={18} />
+            <Download size={16} className="md:w-[18px] md:h-[18px]" />
             <span className="hidden md:inline">Export CSV</span>
           </button>
           <button
             onClick={() => handleExport('pdf')}
-            className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors bg-glow"
+            className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors bg-glow text-sm md:text-base"
           >
-            <Download size={18} />
+            <Download size={16} className="md:w-[18px] md:h-[18px]" />
             <span className="hidden md:inline">Export PDF</span>
           </button>
           <button
             onClick={handleAdd}
-            className="flex items-center gap-2 px-4 py-2 bg-accent-600 hover:bg-accent-700 text-white rounded-lg transition-colors bg-glow-green"
+            className="flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 bg-accent-600 hover:bg-accent-700 text-white rounded-lg transition-colors bg-glow-green text-sm md:text-base"
           >
-            <Plus size={18} />
+            <Plus size={16} className="md:w-[18px] md:h-[18px]" />
             <span className="hidden md:inline">Add Task</span>
             <span className="md:hidden">Add</span>
           </button>
