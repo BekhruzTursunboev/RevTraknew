@@ -45,3 +45,5 @@ export default function MonthlyTrendChart({ transactions }: MonthlyTrendChartPro
 }
 
 
+
+

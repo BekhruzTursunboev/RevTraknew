@@ -10,18 +10,19 @@ export const storage = {
         const parsed = JSON.parse(data);
         // Validate data structure
         if (parsed && typeof parsed === 'object') {
-        return {
-          transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
-          tasks: Array.isArray(parsed.tasks) ? parsed.tasks : [],
-          clients: Array.isArray(parsed.clients) ? parsed.clients : (Array.isArray(parsed.projects) ? [] : []),
-          lastSync: parsed.lastSync || new Date().toISOString(),
-        };
+          return {
+            transactions: Array.isArray(parsed.transactions) ? parsed.transactions : [],
+            tasks: Array.isArray(parsed.tasks) ? parsed.tasks : [],
+            clients: Array.isArray(parsed.clients) ? parsed.clients : (Array.isArray(parsed.projects) ? [] : []),
+            lastSync: parsed.lastSync || new Date().toISOString(),
+          };
         }
       }
+      console.log('RevTrak: LocalStorage data loaded successfully');
     } catch (error) {
       console.error('Error loading data from storage:', error);
     }
-    
+
     return {
       transactions: [],
       tasks: [],
